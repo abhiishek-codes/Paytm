@@ -42,6 +42,8 @@ const moneyTransfer = async (req, res) => {
 
     const paise = amount * 100;
 
+    if (sender.balance < amount) return res.status();
+
     sender.balance -= paise;
     reciever.balance += paise;
 

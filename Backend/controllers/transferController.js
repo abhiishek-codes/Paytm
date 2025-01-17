@@ -42,6 +42,8 @@ const moneyTransfer = async (req, res) => {
 
     const paise = amount * 100;
 
+    if (sender.balance < amount) return res.status();
+
     sender.balance -= paise;
     reciever.balance += paise;
 
@@ -50,7 +52,7 @@ const moneyTransfer = async (req, res) => {
 
     await session.commitTransaction();
     await session.endSession();
-    res.status(200).json({ message: "Transaction Completed" });
+    res.status(200).json({ message: "Transaction Completed !!" });
   } catch (error) {
     if (session) {
       await session.abortTransaction();

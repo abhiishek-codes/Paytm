@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Account = require("../models/accountModel");
 const {
   signupSchemaValidator,
   loginSchemaValidator,
@@ -20,8 +21,13 @@ const userSignup = async (req, res) => {
     const newUser = new User(userData);
     await newUser.save();
     const userId = newUser._id;
-    const token = genToken(userId);
+    const newAccount = new Account({
+      userId: userId,
+      balance: 10000,
+    });
 
+    await newAccount.save();
+    const token = genToken(userId);
     res.cookie("token", token);
     res.status(200).json({ message: "User created successfully" });
   } catch (error) {

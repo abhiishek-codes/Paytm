@@ -29,7 +29,9 @@ const userSignup = async (req, res) => {
     await newAccount.save();
     const token = genToken(userId);
     res.cookie("token", token);
-    res.status(200).json({ message: "User created successfully" });
+    res
+      .status(200)
+      .json({ message: "User created successfully", name: username });
   } catch (error) {
     res.status(500).json({ message: "Server error, please try again later." });
   }
@@ -57,7 +59,7 @@ const userLogin = async (req, res) => {
     const token = genToken(userExist._id);
 
     res.cookie("token", token);
-    res.status(200).json({ message: "User login successfull" });
+    res.status(200).json({ message: "User login successfull", name: username });
   } catch (error) {
     res.status(500).json({ message: "Server error, please try again later." });
   }
